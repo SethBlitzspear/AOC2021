@@ -35,13 +35,13 @@ namespace AOC2020_Day15
                 {
                     int xpos = xCount % Puzzleinput.Length;
                     int ypos = yCount % Puzzleinput.Length;
-                    /*Grid[xCount, yCount]*/ int val  = Convert.ToInt32(Convert.ToString(Puzzleinput[xpos][ypos]));
+                    /*Grid[xCount, yCount]*/ int val  = Convert.ToInt32(Convert.ToString(Puzzleinput[ypos][xpos]));
                     val += xCount / Puzzleinput.Length + yCount / Puzzleinput.Length;
                     if (val > 9)
                     {
-                        val = 1;
+                        val -= 9;
                     }
-                    Point newPoint = new Point() { XPos = xpos, YPos = ypos, Threat = val, Cost = int.MaxValue };
+                    Point newPoint = new Point() { XPos = xCount, YPos = yCount, Threat = val, Cost = int.MaxValue };
                     
                     if(xCount == 0 && yCount == 0)
                     {
@@ -53,6 +53,10 @@ namespace AOC2020_Day15
             bool Found = false;
             while (!Found)
             {
+                if(WorkList.Count % 1000 == 0)
+                {
+                    Console.WriteLine(SortedList.Count + " completed " + WorkList.Count + " to go");
+                }
                 WorkList.Sort((x, y) => x.Cost.CompareTo(y.Cost));
                 Point currentPoint = WorkList[0];
                 WorkList.RemoveAt(0);
@@ -139,7 +143,7 @@ namespace AOC2020_Day15
                 Console.SetCursorPosition(currentPoint.XPos * 2, currentPoint.YPos);
                 Console.Write(currentPoint.Cost);*/
                 SortedList.Add(currentPoint);
-              //  Console.ReadLine();
+               //Console.ReadLine();
             }
 
             Point FinalPoint = getPoint(dim - 1, dim - 1, SortedList);
